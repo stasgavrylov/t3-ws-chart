@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "module": "commonjs",
+    "outDir": "dist",
+    "target": "esnext",
+    "lib": ["dom", "esnext"],
+    "isolatedModules": false,
+    "noEmit": false,
+    "esModuleInterop": false
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"]
+}
