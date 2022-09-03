@@ -1,0 +1,18 @@
+.fetchButton {
+  --shadow-color: #7e58ed;
+
+  background: #cbb9fe;
+  box-shadow: 0 10px var(--shadow-color);
+  transition: all 0.2s;
+}
+
+.fetchButton:hover {
+  background: #aa92f0;
+}
+
+.fetchButton:is(:disabled) {
+  background: #aa92f0;
+  transform: translateY(8px);
+  box-shadow: 0 2px var(--shadow-color);
+  pointer-events: none;
+}

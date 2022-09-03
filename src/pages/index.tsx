@@ -4,6 +4,7 @@ import Head from "next/head";
 import { trpc } from "../utils/trpc";
 import dynamic from "next/dynamic";
 import { ChartData } from "@/components/Chart";
+import { Button } from "@/components/Button";
 
 const Chart = dynamic(() => import("@/components/Chart"), {
   ssr: false,
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
 
   const [drawChart, setDrawChart] = useState(true);
   const [data, setData] = useState<ChartData>([]);
+  const [canFetch, setFetchAbility] = useState(true);
 
   trpc.useSubscription(["data.onSendData"], {
     onNext: (res) => {
@@ -39,6 +41,8 @@ const Home: NextPage = () => {
             y: value.y,
           }));
         });
+      } else {
+        setFetchAbility(true);
       }
     },
   });
@@ -46,30 +50,39 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Performant Graph Project</title>
+        <title>Realtime Graph Demo</title>
         <meta
           name="description"
-          content="Demo app built on t3 stack w/ websockets"
+          content="Demo chart with realtime updates built on t3 stack w/ websockets and react-vs"
         />
         <link rel="icon" href="/favicon.ico" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap"
+          rel="stylesheet"
+        />
       </Head>
 
       <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-        <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-          Check this out
+        <h1 className="text-3xl md:text-[3rem] leading-normal font-extrabold text-gray-700 font-quicksand">
+          Demo chart with realtime updates w/ websockets
         </h1>
 
         <Chart data={data} />
 
-        <button
+        <Button
+          disabled={!canFetch}
+          className="my-4"
           onClick={() => {
-            // @TODO: Add form controls.
             sendDataMutation({ sendData: true, step: 0.3, range: [0, 10] });
             setDrawChart(true);
+            setFetchAbility(false);
           }}
         >
-          Set WS connection
-        </button>
+          Fetch Data
+        </Button>
 
         <FPSMeter />
       </main>
