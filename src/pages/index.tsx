@@ -36,7 +36,8 @@ const Home: NextPage = () => {
         </h1>
         <button
           onClick={() => {
-            sendDataMutation({ sendData: true });
+            // @TODO: Add form controls.
+            sendDataMutation({ sendData: true, step: 0.3, range: [0, 10] });
           }}
         >
           Set WS connection

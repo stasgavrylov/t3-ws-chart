@@ -12,8 +12,8 @@ import { getRandomRange } from "../../utils/data-generator";
 export const dataRouter = createRouter()
   .mutation("send-data", {
     input: dataRequestSchema,
-    resolve({ ctx }) {
-      const rangeGenerator = getRandomRange([0, 10], 0.2);
+    resolve({ ctx, input }) {
+      const rangeGenerator = getRandomRange([0, 10], input.step ?? 0.2);
       const MAX_VALUES = 20;
       let counter = 0;
 
