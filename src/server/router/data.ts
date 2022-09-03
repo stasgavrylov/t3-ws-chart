@@ -7,16 +7,31 @@ import {
 } from "../../constants/schemas";
 import * as trpc from "@trpc/server";
 import { Events } from "../../constants/events";
+import { getRandomRange } from "../../utils/data-generator";
 
 export const dataRouter = createRouter()
   .mutation("send-data", {
     input: dataRequestSchema,
-    resolve({ ctx, input }) {
-      const data = { value: 1 };
+    resolve({ ctx }) {
+      const rangeGenerator = getRandomRange([0, 10], 0.2);
+      const MAX_VALUES = 20;
+      let counter = 0;
 
-      ctx.ee?.emit(Events.SEND_DATA, data);
+      const startTime = Date.now();
+      const interval = setInterval(() => {
+        if (counter > MAX_VALUES) {
+          const endTime = Date.now();
+          ctx.ee?.emit(
+            Events.SEND_DATA,
+            `Estimated Time: ${endTime - startTime} ms.`
+          );
+          clearInterval(interval);
+          return;
+        }
 
-      return data;
+        counter++;
+        ctx.ee?.emit(Events.SEND_DATA, rangeGenerator.next().value);
+      }, Math.round(1000 / 60)); // 60 FPS smoothness
     },
   })
   .subscription("onSendData", {

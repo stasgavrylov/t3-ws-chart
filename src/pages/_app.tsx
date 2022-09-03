@@ -1,7 +1,6 @@
 // src/pages/_app.tsx
 import { clientSchema } from "@/env/schema.mjs";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
-import { loggerLink } from "@trpc/client/links/loggerLink";
 import { wsLink, createWSClient } from "@trpc/client/links/wsLink";
 import { withTRPC } from "@trpc/next";
 import type { AppType } from "next/dist/shared/lib/utils";
@@ -36,15 +35,7 @@ const getEndingLink = () => {
 export default withTRPC<AppRouter>({
   config({ ctx }) {
     return {
-      links: [
-        loggerLink({
-          enabled: (opts) =>
-            process.env.NODE_ENV === "development" ||
-            (opts.direction === "down" && opts.result instanceof Error),
-        }),
-        getEndingLink(),
-      ],
-      // url,
+      links: [getEndingLink()],
       transformer: superjson,
       header() {
         if (ctx?.req) {

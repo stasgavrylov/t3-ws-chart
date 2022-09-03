@@ -9,5 +9,3 @@ export const dataRequestSchema = z.object({
 });
 
 export type SendDataT = z.TypeOf<typeof sendDataSchema>;
-
-// const dataSchema =
