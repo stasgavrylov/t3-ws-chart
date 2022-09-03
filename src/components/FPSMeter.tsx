@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import classnames from "classnames";
+import { useEffect, useRef } from 'react';
+import classnames from 'classnames';
 
 const FPSMeter = () => {
   const fpsMeterRef = useRef<HTMLSpanElement>(null!);
@@ -26,8 +26,8 @@ const FPSMeter = () => {
   }, []);
 
   return (
-    <p className="text-lg leading-normal font-bold text-gray-700">
-      {"Running at "}
+    <p className='text-lg leading-normal font-bold text-gray-700'>
+      {'Running at '}
       <span ref={fpsMeterRef}>...</span>
     </p>
   );

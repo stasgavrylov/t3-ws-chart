@@ -1,29 +1,29 @@
-import { useState } from "react";
-import type { NextPage } from "next";
-import Head from "next/head";
-import { trpc } from "../utils/trpc";
-import dynamic from "next/dynamic";
-import { ChartData } from "@/components/Chart";
-import { Button } from "@/components/Button";
+import { useState } from 'react';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { trpc } from '../utils/trpc';
+import dynamic from 'next/dynamic';
+import { ChartData } from '@/components/Chart';
+import { Button } from '@/components/Button';
 
-const Chart = dynamic(() => import("@/components/Chart"), {
+const Chart = dynamic(() => import('@/components/Chart'), {
   ssr: false,
 });
 
-const FPSMeter = dynamic(() => import("@/components/FPSMeter"), {
+const FPSMeter = dynamic(() => import('@/components/FPSMeter'), {
   ssr: false,
 });
 
 const Home: NextPage = () => {
   const { mutateAsync: sendDataMutation } = trpc.useMutation([
-    "data.send-data",
+    'data.send-data',
   ]);
 
   const [drawChart, setDrawChart] = useState(true);
   const [data, setData] = useState<ChartData>([]);
   const [canFetch, setFetchAbility] = useState(true);
 
-  trpc.useSubscription(["data.onSendData"], {
+  trpc.useSubscription(['data.onSendData'], {
     onNext: (res) => {
       const value = Number(res);
       const MAX_POINTS = 100;
@@ -52,29 +52,29 @@ const Home: NextPage = () => {
       <Head>
         <title>Realtime Graph Demo</title>
         <meta
-          name="description"
-          content="Demo chart with realtime updates built on t3 stack w/ websockets and react-vs"
+          name='description'
+          content='Demo chart with realtime updates built on t3 stack w/ websockets and react-vs'
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link rel='preconnect' href='https://fonts.gstatic.com' />
         <link
-          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap"
-          rel="stylesheet"
+          href='https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap'
+          rel='stylesheet'
         />
       </Head>
 
-      <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-        <h1 className="text-3xl md:text-[3rem] leading-normal font-extrabold text-gray-700 font-quicksand">
-          Demo chart with realtime updates w/ websockets
+      <main className='container mx-auto flex flex-col items-center justify-center min-h-screen p-4'>
+        <h1 className='text-3xl md:text-[3rem] leading-normal font-extrabold text-gray-700 font-quicksand'>
+          Demo chart w/ realtime websocket updates
         </h1>
 
         <Chart data={data} />
 
         <Button
           disabled={!canFetch}
-          className="my-4"
+          className='my-4'
           onClick={() => {
             sendDataMutation({ sendData: true, step: 0.3, range: [0, 10] });
             setDrawChart(true);

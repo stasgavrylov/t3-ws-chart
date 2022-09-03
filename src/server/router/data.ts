@@ -1,16 +1,16 @@
-import { createRouter } from "./context";
-import { z } from "zod";
+import { createRouter } from './context';
+import { z } from 'zod';
 import {
   sendDataSchema,
   dataRequestSchema,
   SendDataT,
-} from "../../constants/schemas";
-import * as trpc from "@trpc/server";
-import { Events } from "../../constants/events";
-import { getRandomRange } from "../../utils/data-generator";
+} from '../../constants/schemas';
+import * as trpc from '@trpc/server';
+import { Events } from '../../constants/events';
+import { getRandomRange } from '../../utils/data-generator';
 
 export const dataRouter = createRouter()
-  .mutation("send-data", {
+  .mutation('send-data', {
     input: dataRequestSchema,
     resolve({ ctx, input }) {
       const rangeGenerator = getRandomRange([1, 10], input.step ?? 0.2);
@@ -21,10 +21,7 @@ export const dataRouter = createRouter()
       const interval = setInterval(() => {
         if (counter > MAX_VALUES) {
           const endTime = Date.now();
-          ctx.ee?.emit(
-            Events.SEND_DATA,
-            `Estimated Time: ${endTime - startTime} ms.`
-          );
+          ctx.ee?.emit(Events.SEND_DATA, null);
           clearInterval(interval);
           return;
         }
@@ -34,7 +31,7 @@ export const dataRouter = createRouter()
       }, Math.round(1000 / 60)); // 60 FPS smoothness
     },
   })
-  .subscription("onSendData", {
+  .subscription('onSendData', {
     resolve({ ctx, input }) {
       return new trpc.Subscription((emit) => {
         function onMessage(data: SendDataT) {
