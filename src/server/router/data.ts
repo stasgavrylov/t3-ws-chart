@@ -13,15 +13,15 @@ export const dataRouter = createRouter()
   .mutation('send-data', {
     input: dataRequestSchema,
     resolve({ ctx, input }) {
-      const rangeGenerator = getRandomRange([1, 10], input.step ?? 0.2);
-      const MAX_VALUES = 200;
+      const ITERATIONS = input.amount ?? 100;
+      const rangeGenerator = getRandomRange([1, 10], ITERATIONS / 100);
       let counter = 0;
 
       const startTime = Date.now();
       const interval = setInterval(() => {
-        if (counter > MAX_VALUES) {
+        if (counter > ITERATIONS) {
           const endTime = Date.now();
-          ctx.ee?.emit(Events.SEND_DATA, null);
+          ctx.ee?.emit(Events.SEND_DATA, Infinity);
           clearInterval(interval);
           return;
         }

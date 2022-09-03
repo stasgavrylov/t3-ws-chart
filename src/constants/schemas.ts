@@ -6,8 +6,7 @@ export const sendDataSchema = z.object({
 
 export const dataRequestSchema = z.object({
   sendData: z.boolean(),
-  step: z.number(),
-  range: z.number().array().length(2),
+  amount: z.number(),
 });
 
 export type SendDataT = z.TypeOf<typeof dataRequestSchema>;

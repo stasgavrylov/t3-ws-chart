@@ -3,7 +3,7 @@
 
   background: #cbb9fe;
   box-shadow: 0 10px var(--shadow-color);
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .fetchButton:hover {

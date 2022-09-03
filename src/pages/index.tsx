@@ -53,7 +53,7 @@ const Home: NextPage = () => {
         <title>Realtime Graph Demo</title>
         <meta
           name='description'
-          content='Demo chart with realtime updates built on t3 stack w/ websockets and react-vs'
+          content='Demo chart with realtime updates built on t3 stack with websockets and react-vis'
         />
         <link rel='icon' href='/favicon.ico' />
 
@@ -76,7 +76,7 @@ const Home: NextPage = () => {
           disabled={!canFetch}
           className='my-4'
           onClick={() => {
-            sendDataMutation({ sendData: true, step: 0.3, range: [0, 10] });
+            sendDataMutation({ sendData: true, amount: 200 });
             setDrawChart(true);
             setFetchAbility(false);
           }}
