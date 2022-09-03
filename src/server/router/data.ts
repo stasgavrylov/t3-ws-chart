@@ -13,7 +13,7 @@ export const dataRouter = createRouter()
   .mutation("send-data", {
     input: dataRequestSchema,
     resolve({ ctx, input }) {
-      const rangeGenerator = getRandomRange([0, 10], input.step ?? 0.2);
+      const rangeGenerator = getRandomRange([1, 10], input.step ?? 0.2);
       const MAX_VALUES = 200;
       let counter = 0;
 
