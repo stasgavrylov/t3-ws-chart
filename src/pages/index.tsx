@@ -9,6 +9,10 @@ const Chart = dynamic(() => import("@/components/Chart"), {
   ssr: false,
 });
 
+const FPSMeter = dynamic(() => import("@/components/FPSMeter"), {
+  ssr: false,
+});
+
 const Home: NextPage = () => {
   const { mutateAsync: sendDataMutation } = trpc.useMutation([
     "data.send-data",
@@ -66,6 +70,8 @@ const Home: NextPage = () => {
         >
           Set WS connection
         </button>
+
+        <FPSMeter />
       </main>
     </>
   );
