@@ -7,7 +7,8 @@
     "dev:ws": "ts-node-dev --project tsconfig.server.json --respawn --transpile-only src/server/wsServer.ts",
     "dev": "run-p dev:*",
     "build": "next build",
-    "start": "next start",
+    "start:prod": "next start",
+    "start": "run-p start:prod dev:ws",
     "lint": "next lint"
   },
   "dependencies": {

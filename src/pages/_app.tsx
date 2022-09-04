@@ -15,7 +15,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''; // browser should use relative url
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
-  return `http://0.0.0.0:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
+  return `https://0.0.0.0:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
 const url = `${getBaseUrl()}/api/trpc`;
@@ -25,9 +25,14 @@ const getEndingLink = () => {
     return httpBatchLink({ url });
   }
 
+  const wsUrl =
+    process.env.NEXT_PUBLIC_WS_URL ||
+    `wss://0.0.0.0:${process.env.NEXT_WS_PORT || 3001}`;
   const client = createWSClient({
-    url: process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3001',
+    url: wsUrl,
   });
+
+  console.log(wsUrl);
 
   return wsLink({ client });
 };
