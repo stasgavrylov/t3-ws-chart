@@ -1,10 +1,5 @@
 import { createRouter } from './context';
-import { z } from 'zod';
-import {
-  sendDataSchema,
-  dataRequestSchema,
-  SendDataT,
-} from '../../constants/schemas';
+import { dataRequestSchema, SendDataT } from '../../constants/schemas';
 import * as trpc from '@trpc/server';
 import { Events } from '../../constants/events';
 import { getRandomRange } from '../../utils/data-generator';
@@ -17,10 +12,8 @@ export const dataRouter = createRouter()
       const rangeGenerator = getRandomRange([1, 10], ITERATIONS / 100);
       let counter = 0;
 
-      const startTime = Date.now();
       const interval = setInterval(() => {
         if (counter > ITERATIONS) {
-          const endTime = Date.now();
           ctx.ee?.emit(Events.SEND_DATA, Infinity);
           clearInterval(interval);
           return;

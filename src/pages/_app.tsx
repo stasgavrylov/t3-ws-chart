@@ -1,5 +1,4 @@
 // src/pages/_app.tsx
-import { clientSchema } from '@/env/schema.mjs';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { wsLink, createWSClient } from '@trpc/client/links/wsLink';
 import { withTRPC } from '@trpc/next';
@@ -25,14 +24,10 @@ const getEndingLink = () => {
     return httpBatchLink({ url });
   }
 
-  const wsUrl =
-    process.env.NEXT_PUBLIC_WS_URL ||
-    `wss://0.0.0.0:${process.env.NEXT_WS_PORT || 3001}`;
+  const wsUrl = process.env.NEXT_PUBLIC_WS_SERVER || `ws://0.0.0.0:3001`;
   const client = createWSClient({
     url: wsUrl,
   });
-
-  console.log(wsUrl);
 
   return wsLink({ client });
 };

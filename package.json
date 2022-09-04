@@ -2,13 +2,16 @@
   "name": "t3-ws-graph",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev:next": "next dev",
-    "dev:ws": "ts-node-dev --project tsconfig.server.json --respawn --transpile-only src/server/wsServer.ts",
+    "dev:ws": "ts-node src/server/wsServer.ts",
+    "prod:ws": "ts-node src/server/wsServerProd.ts",
     "dev": "run-p dev:*",
     "build": "next build",
-    "start:prod": "next start",
-    "start": "run-p start:prod dev:ws",
+    "start": "npm run prod:ws",
     "lint": "next lint"
   },
   "dependencies": {
@@ -17,6 +20,7 @@
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
     "classnames": "^2.3.1",
+    "http": "^0.0.1-security",
     "nanoid": "^4.0.0",
     "next": "12.2.5",
     "node-fetch": "^2.6.1",
@@ -25,6 +29,7 @@
     "react-query": "^3.39.2",
     "react-vis": "^1.11.7",
     "superjson": "^1.9.1",
+    "ts-node": "^10.9.1",
     "ws": "^8.8.1",
     "zod": "^3.18.0"
   },
@@ -44,7 +49,6 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8",
-    "ts-node-dev": "^2.0.0",
     "typescript": "4.7.4"
   },
   "ct3aMetadata": {

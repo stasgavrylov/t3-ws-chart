@@ -1,3 +1,5 @@
+// Generate a stream of values in specified range changing
+// by no more than `step` per iteration.
 export function* getRandomRange(range: [number, number], step: number) {
   const [start, end] = range;
   let nextValue = Math.floor((end - start) / 2);

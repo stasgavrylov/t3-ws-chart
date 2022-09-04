@@ -19,7 +19,6 @@ const Home: NextPage = () => {
     'data.send-data',
   ]);
 
-  const [drawChart, setDrawChart] = useState(true);
   const [data, setData] = useState<ChartData>([]);
   const [canFetch, setFetchAbility] = useState(true);
 
@@ -77,7 +76,6 @@ const Home: NextPage = () => {
           className='my-4'
           onClick={() => {
             sendDataMutation({ sendData: true, amount: 200 });
-            setDrawChart(true);
             setFetchAbility(false);
           }}
         >
@@ -85,6 +83,15 @@ const Home: NextPage = () => {
         </Button>
 
         <FPSMeter />
+        <a
+          href='https://github.com/stasgavrylov/t3-ws-chart'
+          target='_blank'
+          title='Project Repository'
+          className='flex items-center fixed top-3 right-3 font-medium'
+        >
+          <img className='h-5 mr-2' src='/github.png' alt='GitHub logo' />
+          @stasgavrylov
+        </a>
       </main>
     </>
   );
