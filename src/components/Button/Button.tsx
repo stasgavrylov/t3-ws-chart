@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './Button.module.css';
 
 type Props = {
-  className: string;
+  className?: string;
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 

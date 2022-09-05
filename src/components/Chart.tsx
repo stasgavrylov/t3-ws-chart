@@ -1,11 +1,9 @@
 import {
-  XYPlot,
   YAxis,
   AreaSeries,
   VerticalGridLines,
   HorizontalGridLines,
-  GradientDefs,
-  YAxisProps,
+  FlexibleWidthXYPlot,
 } from 'react-vis';
 import 'react-vis/dist/style.css';
 
@@ -13,9 +11,9 @@ export type ChartData = { x: number; y: number }[];
 const Chart: React.FC<{ data: ChartData }> = ({ data }) => {
   return (
     <div className='rounded-lg' style={{ background: '#7e58ed' }}>
-      <XYPlot
-        height={500}
-        width={1200}
+      <FlexibleWidthXYPlot
+        height={400}
+        width={Math.min(window.innerWidth * 0.75, 1000)}
         yDomain={[0, 10]}
         xDomain={[0, 99]}
         margin={30}
@@ -43,7 +41,7 @@ const Chart: React.FC<{ data: ChartData }> = ({ data }) => {
           tickFormat={myFormatter}
           style={{ stroke: 'transparent' }}
         />
-      </XYPlot>
+      </FlexibleWidthXYPlot>
     </div>
   );
 };

@@ -4,7 +4,8 @@ import Head from 'next/head';
 import { trpc } from '../utils/trpc';
 import dynamic from 'next/dynamic';
 import { ChartData } from '@/components/Chart';
-import { Button } from '@/components/Button';
+import { Button } from '@/components/Button/Button';
+import { RangeInput } from '@/components/RangeInput/RangeInput';
 
 const Chart = dynamic(() => import('@/components/Chart'), {
   ssr: false,
@@ -20,6 +21,8 @@ const Home: NextPage = () => {
   ]);
 
   const [data, setData] = useState<ChartData>([]);
+  const [range, setRange] = useState<number>(100);
+
   const [canFetch, setFetchAbility] = useState(true);
 
   trpc.useSubscription(['data.onSendData'], {
@@ -65,24 +68,45 @@ const Home: NextPage = () => {
       </Head>
 
       <main className='container mx-auto flex flex-col items-center justify-center min-h-screen p-4'>
-        <h1 className='text-3xl md:text-[3rem] leading-normal font-extrabold text-gray-700 font-quicksand'>
+        <h1 className='text-3xl leading-normal font-extrabold text-gray-700 font-quicksand'>
           Demo chart w/ realtime websocket updates
         </h1>
+        <p className='mb-2 text-lg leading-normal font-extrabold text-gray-500 font-quicksand'>
+          On button press server will push {range} data points with 60 RPS
+          frequency
+        </p>
 
-        <Chart data={data} />
+        <div style={{ height: 400 }}>
+          <Chart data={data} />
+        </div>
+
+        <label className='flex flex-row items-center font-quicksand my-4'>
+          <span>50</span>
+          <RangeInput
+            min={50}
+            max={500}
+            value={range}
+            step={1}
+            onChange={setRange}
+            className='mx-2'
+          />
+          <span>500</span>
+        </label>
 
         <Button
+          className='mb-4'
           disabled={!canFetch}
-          className='my-4'
           onClick={() => {
-            sendDataMutation({ sendData: true, amount: 200 });
+            sendDataMutation({ sendData: true, amount: range });
             setFetchAbility(false);
           }}
         >
           Fetch Data
         </Button>
 
-        <FPSMeter />
+        <div className='h-8'>
+          <FPSMeter />
+        </div>
         <a
           href='https://github.com/stasgavrylov/t3-ws-chart'
           target='_blank'
